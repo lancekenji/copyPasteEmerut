@@ -1,0 +1,1326 @@
+{% extends 'blood/adminbase.html' %}
+{% block content %}
+{% load widget_tweaks %}
+<style>
+            .xyz{
+      
+      display: table;
+      margin-right: auto;
+      margin-left: auto;
+            }
+      
+      a {
+        color: black;
+      }
+</style>
+<br><br>
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-3">
+      <a href="#bloodA+Modal" data-toggle="modal" data-target="#bloodA+Modal" class="card bg-light" style="text-decoration: none;">
+        <div class="card-body">
+          <div class="blood">
+            <h2>Blood Group A+</h2>
+          </div>
+          <br>
+          <p>Total RBC: {{A1_RBC.count}}
+          <br>Total WBC: {{A1_WBC.count}}
+          <br>Total Plasma: {{A1_PSM.count}}
+          <br>Total Platelets: {{A1_PLA.count}}</p>
+          <div>
+            <p>Whole Blood: {{A1.count}}</p>
+          </div>                            
+        </div>
+      </a>
+    </div>
+    <div class="modal fade" id="bloodA+Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Blood A+ Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLA" class="nav-link active" data-toggle="tab" aria-controls="tabBLA-A">BLA Units</a></li>
+              <li class="nav-item"><a href="#tabRBC-A" class="nav-link" data-toggle="tab" aria-controls="tabRBC-A">RBC Units</a></li>
+              <li class="nav-item"><a href="#tabWBC-A" class="nav-link" data-toggle="tab" aria-controls="tabWBC-A">WBC Units</a></li>
+              <li class="nav-item"><a href="#tabPSM-A" class="nav-link" data-toggle="tab" aria-controls="tabPSM-A">PSM Units</a></li>
+              <li class="nav-item"><a href="#tabPLA-A" class="nav-link" data-toggle="tab" aria-controls="tabPLA-A">PLA Units</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tabBLA">
+                <div id="bloodA+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalA+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabRBC-A">
+                <div id="RBCA+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRBCA+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabWBC-A">
+                <div id="WBCA+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWBCA+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPSM-A">
+                <div id="PSMA+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPSMA+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPLA-A">
+                <div id="PLAA+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPLAA+">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addPLAA+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add PLA to A+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="A+" />
+            <input type="hidden" name="type" value="pla" />
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="plunit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="plreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="plexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="modal fade" id="addRBCA+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add RBC to A+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="A+"/>
+            <input type="hidden" name="type" value="rbc"/>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="runit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="rreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="rexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addPSMA+" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add PSM to A+</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="bloodgroup" value="A+" />
+              <input type="hidden" name="type" value="psm" />
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="psunit" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="psreceive_date" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="psexpiration_date" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addWBCA+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add WBC to A+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="A+"/>
+            <input type="hidden" name="type" value="wbc"/>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="wunit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="wreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="wexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="modal fade" id="addModalA+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Blood Unit</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="A+"/>
+            <input type="hidden" name="type" value="bloodUnit"/>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLA-A" class="nav-link active" data-toggle="tab" aria-controls="tabBLA-A">BLA Units</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tabBLA-A">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="bunit" required/>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="breceive_date" required/>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="bexpiration_date" required/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <a href="#bloodB+Modal" data-toggle="modal" data-target="#bloodB+Modal" class="card bg-light" style="text-decoration: none;">
+        <div class="card-body">
+          <div class="blood">
+            <h2>Blood Group B+</h2>
+          </div>
+          <br>
+          <p>Total RBC: {{B1_RBC.count}}
+          <br>Total WBC: {{B1_WBC.count}}
+          <br>Total Plasma: {{B1_PSM.count}}
+          <br>Total Platelets: {{B1_PLA.count}}</p>
+          <div>
+            <p>Whole Blood: {{B1.count}}</p>
+          </div>                            
+        </div>
+      </a>
+    </div>
+    <div class="modal fade" id="bloodB+Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Blood B+ Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLB" class="nav-link active" data-toggle="tab" aria-controls="tabBLA-B">BLB Units</a></li>
+              <li class="nav-item"><a href="#tabRBC-B" class="nav-link" data-toggle="tab" aria-controls="tabRBC-B">RBC Units</a></li>
+              <li class="nav-item"><a href="#tabWBC-B" class="nav-link" data-toggle="tab" aria-controls="tabWBC-B">WBC Units</a></li>
+              <li class="nav-item"><a href="#tabPSM-B" class="nav-link" data-toggle="tab" aria-controls="tabPSM-B">PSM Units</a></li>
+              <li class="nav-item"><a href="#tabPLA-B" class="nav-link" data-toggle="tab" aria-controls="tabPLA-B">PLA Units</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tabBLB">
+                <div id="bloodB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabRBC-B">
+                <div id="RBCB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRBCB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabWBC-B">
+                <div id="WBCB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWBCB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPSM-B">
+                <div id="PSMB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPSMB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPLA-B">
+                <div id="PLAB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPLAB+">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addRBCB+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add RBC to B+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="B+"/>
+            <input type="hidden" name="type" value="rbc"/>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="runit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="rreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="rexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="addPLAB+" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add PLA to B+</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="bloodgroup" value="B+" />
+              <input type="hidden" name="type" value="pla" />
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="plunit" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="plreceive_date" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="plexpiration_date" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="modal fade" id="addPSMB+" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add PSM to B+</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="bloodgroup" value="B+" />
+              <input type="hidden" name="type" value="psm" />
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="psunit" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="psreceive_date" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="psexpiration_date" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="modal fade" id="addWBCB+" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add WBC to B+</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="bloodgroup" value="B+"/>
+              <input type="hidden" name="type" value="wbc"/>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="wunit" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="wreceive_date" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="wexpiration_date" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    <div class="modal fade" id="addModalB+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Blood Unit</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="B+"/>
+            <input type="hidden" name="type" value="bloodUnit"/>
+          <div class="modal-body">
+            
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabBLA-B">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          How much unit(s)?
+                        </label>
+                        <input type="number" class="form-control" min="1" name="bunit" required/>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          Receiving Date
+                        </label>
+                        <input type="date" class="form-control" name="breceive_date" required/>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          Expiration Date
+                        </label>
+                        <input type="date" class="form-control" name="bexpiration_date" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <a href="#bloodO+Modal" data-toggle="modal" data-target="#bloodO+Modal" class="card bg-light" style="text-decoration: none;">
+        <div class="card-body">
+          <div class="blood">
+            <h2>Blood Group O+</h2>
+          </div>
+          <br>
+          <p>Total RBC: {{O1_RBC.count}}
+          <br>Total WBC: {{O1_WBC.count}}
+          <br>Total Plasma: {{O1_PSM.count}}
+          <br>Total Platelets: {{O1_PLA.count}}</p>
+          <div>
+            <p>Whole Blood: {{O1.count}}</p>
+          </div>                            
+        </div>
+      </a>
+    </div>
+    <div class="modal fade" id="bloodO+Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Blood O+ Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLO" class="nav-link active" data-toggle="tab" aria-controls="tabBLA-B">BLO Units</a></li>
+              <li class="nav-item"><a href="#tabRBC-O" class="nav-link" data-toggle="tab" aria-controls="tabRBC-B">RBC Units</a></li>
+              <li class="nav-item"><a href="#tabWBC-O" class="nav-link" data-toggle="tab" aria-controls="tabWBC-B">WBC Units</a></li>
+              <li class="nav-item"><a href="#tabPSM-O" class="nav-link" data-toggle="tab" aria-controls="tabPSM-B">PSM Units</a></li>
+              <li class="nav-item"><a href="#tabPLA-O" class="nav-link" data-toggle="tab" aria-controls="tabPLA-B">PLA Units</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tabBLO">
+                <div id="bloodO+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalO+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabRBC-O">
+                <div id="RBCO+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRBCO+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabWBC-O">
+                <div id="WBCO+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWBCO+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPSM-O">
+                <div id="PSMO+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPSMO+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPLA-O">
+                <div id="PLAO+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPLAO+">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addRBCO+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add RBC to O+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="O+"/>
+            <input type="hidden" name="type" value="rbc"/>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="runit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="rreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="rexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="addPLAO+" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add PLA to O+</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="bloodgroup" value="O+" />
+              <input type="hidden" name="type" value="pla" />
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="plunit" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="plreceive_date" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="plexpiration_date" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addPSMO+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add PSM to O+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="O+" />
+            <input type="hidden" name="type" value="psm" />
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="psunit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="psreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="psexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addWBCO+" tabindex="-1" role="dialog" data-backdrop="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add WBC to O+</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="bloodgroup" value="O+"/>
+          <input type="hidden" name="type" value="wbc"/>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="my-3">
+                  <label class="form-label">
+                    How much unit(s)?
+                  </label>
+                  <input type="number" class="form-control" min="1" name="wunit" required />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="my-3">
+                  <label class="form-label">
+                    Receiving Date
+                  </label>
+                  <input type="date" class="form-control" name="wreceive_date" required />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="my-3">
+                  <label class="form-label">
+                    Expiration Date
+                  </label>
+                  <input type="date" class="form-control" name="wexpiration_date" required />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="addModalO+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Blood Unit</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="O+"/>
+            <input type="hidden" name="type" value="bloodUnit"/>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLA-O" class="nav-link active" data-toggle="tab" aria-controls="tabBLA-O">BLO Units</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabBLA-O">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          How much unit(s)?
+                        </label>
+                        <input type="number" class="form-control" min="1" name="bunit" required/>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          Receiving Date
+                        </label>
+                        <input type="date" class="form-control" name="breceive_date" required/>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          Expiration Date
+                        </label>
+                        <input type="date" class="form-control" name="bexpiration_date" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <a href="#bloodAB+Modal" data-toggle="modal" data-target="#bloodAB+Modal" class="card bg-light" style="text-decoration: none;">
+        <div class="card-body">
+          <div class="blood">
+            <h2>Blood Group AB+</h2>
+          </div>
+          <br>
+          <p>Total RBC: {{AB1_RBC.count}}
+            <br>
+            Total WBC: {{AB1_WBC.count}}
+            <br>
+            Total Plasma: {{AB1_PSM.count}}
+            <br>
+            Total Platelets: {{AB1_PLA.count}}
+            <br>
+          </p>
+          <div>
+            <p>Whole Blood: {{AB1.count}}</p>
+          </div>                            
+        </div>
+      </a>
+    </div>
+    <div class="modal fade" id="bloodAB+Modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Blood AB+ Details</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLAB" class="nav-link active" data-toggle="tab" aria-controls="tabBLAB">BLAB Units</a></li>
+              <li class="nav-item"><a href="#tabRBC-AB" class="nav-link" data-toggle="tab" aria-controls="tabRBC-AB">RBC Units</a></li>
+              <li class="nav-item"><a href="#tabWBC-AB" class="nav-link" data-toggle="tab" aria-controls="tabWBC-AB">WBC Units</a></li>
+              <li class="nav-item"><a href="#tabPSM-AB" class="nav-link" data-toggle="tab" aria-controls="tabPSM-AB">PSM Units</a></li>
+              <li class="nav-item"><a href="#tabPLA-AB" class="nav-link" data-toggle="tab" aria-controls="tabPLA-AB">PLA Units</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="tabBLAB">
+                <div id="bloodAB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModalAB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabRBC-AB">
+                <div id="RBCAB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRBCAB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabWBC-AB">
+                <div id="WBCAB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addWBCAB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPSM-AB">
+                <div id="PSMAB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPSMAB+">Add</button>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="tabPLA-AB">
+                <div id="PLAAB+"></div>
+                <hr>
+                <div class="d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPLAAB+">Add</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addPSMAB+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add PSM to AB+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="AB+" />
+            <input type="hidden" name="type" value="psm" />
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="psunit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="psreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="psexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addWBCAB+" tabindex="-1" role="dialog" data-backdrop="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add WBC to AB+</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="bloodgroup" value="AB+"/>
+          <input type="hidden" name="type" value="wbc"/>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="my-3">
+                  <label class="form-label">
+                    How much unit(s)?
+                  </label>
+                  <input type="number" class="form-control" min="1" name="wunit" required />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="my-3">
+                  <label class="form-label">
+                    Receiving Date
+                  </label>
+                  <input type="date" class="form-control" name="wreceive_date" required />
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="my-3">
+                  <label class="form-label">
+                    Expiration Date
+                  </label>
+                  <input type="date" class="form-control" name="wexpiration_date" required />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addRBCAB+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add RBC to AB+</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="AB+"/>
+            <input type="hidden" name="type" value="rbc"/>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      How much unit(s)?
+                    </label>
+                    <input type="number" class="form-control" min="1" name="runit" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Receiving Date
+                    </label>
+                    <input type="date" class="form-control" name="rreceive_date" required />
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="my-3">
+                    <label class="form-label">
+                      Expiration Date
+                    </label>
+                    <input type="date" class="form-control" name="rexpiration_date" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="addPLAAB+" tabindex="-1" role="dialog" data-backdrop="false">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add PLA to AB+</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="bloodgroup" value="AB+" />
+              <input type="hidden" name="type" value="pla" />
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        How much unit(s)?
+                      </label>
+                      <input type="number" class="form-control" min="1" name="plunit" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Receiving Date
+                      </label>
+                      <input type="date" class="form-control" name="plreceive_date" required />
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="my-3">
+                      <label class="form-label">
+                        Expiration Date
+                      </label>
+                      <input type="date" class="form-control" name="plexpiration_date" required />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="addModalAB+" tabindex="-1" role="dialog" data-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Blood Unit</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="bloodgroup" value="AB+"/>
+            <input type="hidden" name="type" value="bloodUnit"/>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item"><a href="#tabBLA-AB" class="nav-link active" data-toggle="tab" aria-controls="tabBLA-AB">BLAB Units</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabBLA-AB">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          How much unit(s)?
+                        </label>
+                        <input type="number" class="form-control" min="1" name="bunit" required/>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          Receiving Date
+                        </label>
+                        <input type="date" class="form-control" name="breceive_date" required/>
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="my-3">
+                        <label class="form-label">
+                          Expiration Date
+                        </label>
+                        <input type="date" class="form-control" name="bexpiration_date" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+<hr>
+
+
+</div>
+
+
+{% endblock content %}
