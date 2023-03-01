@@ -1,0 +1,821 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+              {{bloodgroup}}
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+    <style>
+
+    .row{
+        padding: 5px;
+    }
+    .fa-tint{
+        color: red;
+    }
+    .blood{
+        float: center;
+    }
+    .fa-users{
+        color: #8B0000;
+        font-size: 3ex;
+    }
+    .fa-spinner{
+        color: #8B0000;
+        font-size: 3ex;
+    }
+    .fa-check-circle{
+        color: #8B0000;
+        font-size: 3ex;
+    }
+    .xyz{
+        color: #8B0000 ;
+        font-size: 3ex;
+    }
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+body{
+   background-color: #fefcff;
+}
+.bg-danger {
+    background-color: #8B0000!important;
+}
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+.wrapper .sidebar{
+  width: 200px;
+  height: 100%;
+  background: #343a40;
+  padding: 10px 0px;
+  position: fixed;
+}
+
+.wrapper .sidebar h2{
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.wrapper .sidebar ul li a{
+  color: #fff;
+  display: block;
+}
+
+.wrapper .sidebar ul li a .fas{
+  width: 25px;
+}
+
+.wrapper .sidebar ul li:hover{
+  background-color: #fefcff;
+}
+
+.wrapper .sidebar ul li:hover a{
+  color: #000;
+}
+
+.wrapper .sidebar .social_media{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.wrapper .sidebar .social_media a{
+  display: block;
+  width: 40px;
+  background: #8B0000;
+  height: 40px;
+  line-height: 45px;
+  text-align: center;
+  margin: 0 5px;
+  color: #bdb8d7;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.wrapper .main_content{
+  width: 100%;
+  margin-left: 200px;
+}
+
+.wrapper .main_content .header{
+  padding: 20px;
+  background: #fff;
+  color: #717171;
+  border-bottom: 1px solid #e0e4e8;
+}
+
+.wrapper .main_content .info{
+  margin: 20px;
+  color: #717171;
+  line-height: 25px;
+}
+
+.wrapper .main_content .info div{
+  margin-bottom: 20px;
+}
+
+@media (max-height: 500px){
+  .social_media{
+    display: none !important;
+  }
+}
+.fa-sign-out-alt{
+    color: white;
+    font-size: 2ex;
+}
+
+.box{
+  color:  #fff;
+  background: #8B0000;
+}
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg sticky-top" style="background:#800000;">
+        <a style="color:white;" class="navbar-brand" href="/">&nbsp;<font face = "Comic sans MS" size ="5"><img src="{% static "image/sjmc.png" %}" height=50 alt="logo"> BLOOD BANK MANAGEMENT</font></a>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white;" href="/logout">Logout &nbsp; <i style="color:white;" class="fas fa-sign-out-alt"></i></a>
+                </li>
+
+            </ul>
+        </div>
+      </nav>
+
+
+<div class="wrapper">
+    <div class="sidebar" style="background:#800000;">
+
+        <ul>
+            <li><a style="text-decoration:none;" href="/">Home</a></li>
+            <li><a style="text-decoration:none;" href="/notifications">Notification <span class="ml-2 badge badge-warning" id="count"></span></a></li>
+            <li><a style="text-decoration:none;" href="/admin-announcement">Announcement</a></li>
+            <li><a style="text-decoration:none;" href="/admin-donor">Donor Details</a></li>
+            <li><a style="text-decoration:none;" href="/admin-donation">Donations Details</a></li>
+            <li><a style="text-decoration:none;" href="/admin-request">Blood Requests</a></li>
+            <li><a style="font-family:"Lucida Console;" href="/request_history">Request History</a></li>
+            <li><a style="text-decoration:none;" href="/admin-blood"></i>Blood Stock</a></li>
+
+        </ul>
+
+    </div>
+    <div class="main_content">
+
+
+{% block content %}
+
+{% endblock content %}
+
+
+
+    </div>
+</div>
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations-v1.0.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js"></script>
+    <script>
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in A1_RBC %}
+            ['RBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("RBCA+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in A1_WBC %}
+            ['WBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("WBCA+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in A1_PLA %}
+            ['PLA-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PLAA+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in A1_PSM %}
+            ['PSM-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PSMA+"));
+
+      // O+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in O1_RBC %}
+            ['RBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("RBCO+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in O1_WBC %}
+            ['WBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("WBCO+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in O1_PLA %}
+            ['PLA-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PLAO+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in O1_PSM %}
+            ['PSM-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PSMO+"));
+      
+
+      // AB+
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in AB1_RBC %}
+            ['RBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("RBCAB+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in AB1_WBC %}
+            ['WBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("WBCAB+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in AB1_PLA %}
+            ['PLA-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PLAAB+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in AB1_PSM %}
+            ['PSM-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PSMAB+"));
+
+      //
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in B1_RBC %}
+            ['RBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("RBCB+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in B1_WBC %}
+            ['WBC-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("WBCB+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in B1_PLA %}
+            ['PLA-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PLAB+"));
+
+      new gridjs.Grid({
+        columns: ["ID No.", "Receiving Date", "Expiration Date"],
+        search: false,
+        data: [
+          {% for a in B1_PSM %}
+            ['PSM-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}'],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("PSMB+"));
+
+
+      new gridjs.Grid({
+        columns: [{name: "ID", hidden: true},"ID No.", "Receiving Date", "Expiration Date",{ name: "Actions", formatter: (_, row) => gridjs.html(
+          `
+          <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editBloodA1-${row.cells[0].data}">Edit</button> <button type="button" class="btn btn-danger btn-sm" onclick="window.location='deleteUnit/${row.cells[0].data}'">Delete</button>
+          <div class="modal fade" id="editBloodA1-${row.cells[0].data}" tabindex="-1" role="dialog" data-backdrop="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit Whole Blood Unit A+ (${row.cells[1].data})</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-target="#editBloodA1-${row.cells[0].data}">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="bloodgroup" value="A+" />
+                  <input type="hidden" name="type" value="bloodUnit" />
+                  <input type="hidden" name="edit" value="1" />
+                  <input type="hidden" name="bloodUnit" value="${row.cells[0].data}"/>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Receiving Date
+                          </label>
+                          <input type="date" class="form-control" name="breceive_date" required value="${new Date(row.cells[2].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Expiration Date
+                          </label>
+                          <input type="date" class="form-control" name="bexpiration_date" required value="${new Date(row.cells[3].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          `
+          ) }
+        ],
+        search: false,
+        data: [
+          {% for a in A1 %}
+            ['{{a.id}}','BD-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}', null],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("bloodA+"));
+      
+      new gridjs.Grid({
+        columns: [{name: "ID", hidden: true},"ID No.", "Receiving Date", "Expiration Date",{ name: "Actions", formatter: (_, row) => gridjs.html(
+          `
+          <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editBloodB1-${row.cells[0].data}">Edit</button> <button type="button" class="btn btn-danger btn-sm" onclick="window.location='deleteUnit/${row.cells[0].data}'">Delete</button>
+          <div class="modal fade" id="editBloodB1-${row.cells[0].data}" tabindex="-1" role="dialog" data-backdrop="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit Whole Blood Unit B+ (${row.cells[1].data})</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-target="#editBloodB1-${row.cells[0].data}">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="bloodgroup" value="B+" />
+                  <input type="hidden" name="type" value="bloodUnit" />
+                  <input type="hidden" name="edit" value="1" />
+                  <input type="hidden" name="bloodUnit" value="${row.cells[0].data}"/>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Receiving Date
+                          </label>
+                          <input type="date" class="form-control" name="breceive_date" required value="${new Date(row.cells[2].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Expiration Date
+                          </label>
+                          <input type="date" class="form-control" name="bexpiration_date" required value="${new Date(row.cells[3].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          `
+          ) }
+        ],
+        search: false,
+        data: [
+          {% for a in B1 %}
+            ['{{a.id}}','BD-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}', null],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("bloodB+"));
+
+      new gridjs.Grid({
+        columns: [{name: "ID", hidden: true},"ID No.", "Receiving Date", "Expiration Date",{ name: "Actions", formatter: (_, row) => gridjs.html(
+          `
+          <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editBloodO1-${row.cells[0].data}">Edit</button> <button type="button" class="btn btn-danger btn-sm" onclick="window.location='deleteUnit/${row.cells[0].data}'">Delete</button>
+          <div class="modal fade" id="editBloodO1-${row.cells[0].data}" tabindex="-1" role="dialog" data-backdrop="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit Whole Blood Unit O+ (${row.cells[1].data})</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-target="#editBloodO1-${row.cells[0].data}">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="bloodgroup" value="O+" />
+                  <input type="hidden" name="type" value="bloodUnit" />
+                  <input type="hidden" name="edit" value="1" />
+                  <input type="hidden" name="bloodUnit" value="${row.cells[0].data}"/>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Receiving Date
+                          </label>
+                          <input type="date" class="form-control" name="breceive_date" required value="${new Date(row.cells[2].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Expiration Date
+                          </label>
+                          <input type="date" class="form-control" name="bexpiration_date" required value="${new Date(row.cells[3].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          `
+          ) }
+        ],
+        search: false,
+        data: [
+          {% for a in O1 %}
+            ['{{a.id}}','BD-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}', null],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("bloodO+"));
+
+      new gridjs.Grid({
+        columns: [{name: "ID", hidden: true},"ID No.", "Receiving Date", "Expiration Date",{ name: "Actions", formatter: (_, row) => gridjs.html(
+          `
+          <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editBloodAB1-${row.cells[0].data}">Edit</button> <button type="button" class="btn btn-danger btn-sm" onclick="window.location='deleteUnit/${row.cells[0].data}'">Delete</button>
+          <div class="modal fade" id="editBloodAB1-${row.cells[0].data}" tabindex="-1" role="dialog" data-backdrop="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit Whole Blood Unit AB+ (${row.cells[1].data})</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-target="#editBloodAB1-${row.cells[0].data}">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="bloodgroup" value="AB+" />
+                  <input type="hidden" name="type" value="bloodUnit" />
+                  <input type="hidden" name="edit" value="1" />
+                  <input type="hidden" name="bloodUnit" value="${row.cells[0].data}"/>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Receiving Date
+                          </label>
+                          <input type="date" class="form-control" name="breceive_date" required value="${new Date(row.cells[2].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="my-3">
+                          <label class="form-label">
+                            Expiration Date
+                          </label>
+                          <input type="date" class="form-control" name="bexpiration_date" required value="${new Date(row.cells[3].data.replace(/(\d{1,2})(st|nd|rd|th)/, '$1')).toISOString().slice(0, 10)}"/>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          `
+          ) }
+        ],
+        search: false,
+        data: [
+          {% for a in AB1 %}
+            ['{{a.id}}','BD-{{a.id|stringformat:"08d"|add:""}}', '{{a.receive_date}}', '{{a.expiration_date}}', null],
+          {% endfor %}
+        ]
+      }).render(document.getElementById("bloodAB+"));
+
+    </script>
+    <script>
+      const ctx = document.getElementById('ageChart');
+      const ctx1 = document.getElementById('bloodRatio');
+      const ctx2 = document.getElementById('donorReject');
+    
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['20-25 yrs', '26-30 yrs', '31-35 yrs', '36-40 yrs'],
+          datasets: [{
+            label: '# of Donor',
+            data: [{{total1}}, {{total2}}, {{total3}}, {{total4}}],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: "Number of Blood Donor by Age Group"
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['A+', 'B+', 'O+', 'B+'],
+          datasets: [{
+            label: '# of Donor',
+            data: [{{A1ratio}}, {{B1ratio}}, {{O1ratio}}, {{AB1ratio}}],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: "Blood Group Ratio"
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+      
+      new Chart(ctx2, {
+          type: 'line',
+          data: {
+              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              datasets: [
+                  {
+                      label: '# of Approved Donations',
+                      data: [{{jan_approved}}, {{feb_approved}}, {{mar_approved}}, {{apr_approved}}, {{may_approved}}, {{jun_approved}}, {{jul_approved}}, {{aug_approved}}, {{sep_approved}}, {{oct_approved}}, {{nov_approved}}, {{dec_approved}}],
+                      fill: false,
+                      borderColor: 'red',
+                      tension: 0.1
+                  },
+                  {
+                      label: '# of Rejected Donations',
+                      data: [{{jan_rejected}}, {{feb_rejected}}, {{mar_rejected}}, {{apr_rejected}}, {{may_rejected}}, {{jun_rejected}}, {{jul_rejected}}, {{aug_rejected}}, {{sep_rejected}}, {{oct_rejected}}, {{nov_rejected}}, {{dec_rejected}}],
+                      fill: false,
+                      borderColor: 'blue',
+                      tension: 0.1
+                  }
+              ]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  title: {
+                      display: true,
+                      text: 'Graph for No. of Approved Donations and No. of Rejected Donations'
+                  }
+              },
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        // function fetchNotifications(){
+        //   fetch('/fetch-notifications')
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     $("#count").text(data['count']);
+        //   })
+        //   .catch(error => console.log(error));
+        // }
+        // fetchNotifications();
+        // setInterval(fetchNotifications, 5000);
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'fetch-notifications',
+          success: function(data){
+            
+          }
+        })
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'https://ph-locations-api.buonzz.com/v1/regions/'+$("#region").text(),
+          success: function(data){
+            $("#region").text(data['name']);
+          }
+        });
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'https://ph-locations-api.buonzz.com/v1/provinces/'+$("#province").text(),
+          success: function(data){
+            $("#province").text(data['name']);
+          }
+        });
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'https://ph-locations-api.buonzz.com/v1/cities/'+$("#city").text(),
+          success: function(data){
+            $("#city").text(data['name']);
+          }
+        });
+        $.ajax({
+          type: "GET",
+          dataType: 'json',
+          url: 'https://ph-locations-api.buonzz.com/v1/barangays/'+$("#brgy").text(),
+          success: function(data){
+            $("#brgy").text(data['name']);
+          }
+        });
+      });
+    </script>
+    <script>
+      function isGmailOrYahoo() {
+          var mailaddr = document.getElementById("id_email").value;
+          var re = /.+@(gmail|yahoo)\.com$/;
+          if(re.test(mailaddr) == true){
+              document.getElementById("donor_submit").disabled = false;
+          } else {
+              document.getElementById("donor_submit").disabled = true;
+          }
+      }
+      var my_handlers = {
+          fill_provinces:  function(){
+              var region_code = $(this).val();
+              $('#province_dropdown').ph_locations('fetch_list', [{"region_code": region_code}]);
+              
+          },
+          fill_cities: function(){
+              var province_code = $(this).val();
+              $('#city_dropdown').ph_locations( 'fetch_list', [{"province_code": province_code}]);
+          },
+          fill_barangays: function(){
+              var city_code = $(this).val();
+              $('#brgy_dropdown').ph_locations('fetch_list', [{"city_code": city_code}]);
+          }
+      };
+
+      $(function(){
+
+          $('#region_dropdown').on('change', my_handlers.fill_provinces);
+          $('#province_dropdown').on('change', my_handlers.fill_cities);
+          $('#city_dropdown').on('change', my_handlers.fill_barangays);
+
+          $('#region_dropdown').ph_locations({'location_type': 'regions'});
+          $('#province_dropdown').ph_locations({'location_type': 'provinces'});
+          $('#city_dropdown').ph_locations({'location_type': 'cities'});
+          $('#brgy_dropdown').ph_locations({'location_type': 'barangays'});
+          $('#region_dropdown').ph_locations('fetch_list');
+      });
+  </script>
+</body>
+</html>
