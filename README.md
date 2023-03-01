@@ -1,5 +1,5 @@
 ### Base dito sa code na ito.
-```
+```js
 new gridjs.Grid({
   columns: [{name: "ID", hidden: true},"ID No.", "Receiving Date", "Expiration Date",{ name: "Actions", formatter: (_, row) => gridjs.html(
     `
@@ -59,7 +59,7 @@ new gridjs.Grid({
 
 ### Gusto ko gawin ang same idea para sa mga grid table shit neto
 
-```
+```js
 render(document.getElementById("PSMB+"));
 render(document.getElementById("PLAB+"));
 render(document.getElementById("WBCB+"));
